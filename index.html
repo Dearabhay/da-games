@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DA Games Studio – Mobile Games by dear_abhay7676</title>
+  <meta name="description" content="DA Games Studio – Creators of Master Chess, Sweet Crunch, and Puzzle Arena. Download our free mobile games on Google Play."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:     #080a10;
+      --bg2:    #0d1018;
+      --bg3:    #111520;
+      --text:   #eef0f8;
+      --muted:  #6b7280;
+      --chess-gold:  #d4a843;
+      --chess-dark:  #1a2e1a;
+      --candy-pink:  #ff4f91;
+      --candy-blue:  #3de8ff;
+      --puzzle-pur:  #9b5cf6;
+      --puzzle-cyan: #22d3ee;
+      --accent:  #4f8ef7;
+      --glow:    rgba(79,142,247,0.2);
+      --card:    rgba(255,255,255,0.04);
+      --border:  rgba(255,255,255,0.07);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* GRID BACKGROUND */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(79,142,247,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,142,247,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 7%;
+      background: rgba(8,10,16,0.9);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'Bebas Neue', cursive; font-size: 1.6rem; letter-spacing: 3px;
+      color: var(--text); text-decoration: none;
+    }
+    .logo-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+    .nav-links { display: flex; gap: 36px; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-weight: 600; font-size: .9rem; letter-spacing: .5px;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--accent); color: #fff;
+      font-weight: 700; font-size: .88rem; letter-spacing: .5px;
+      padding: 10px 22px; border-radius: 8px; text-decoration: none;
+      transition: opacity .2s, transform .2s;
+    }
+    .nav-cta:hover { opacity: .85; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 130px 7% 80px;
+      position: relative; z-index: 1;
+    }
+
+    /* Glowing orbs */
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(120px); pointer-events: none; z-index: 0;
+    }
+    .orb-a { width: 600px; height: 600px; top: -200px; left: -200px;
+      background: rgba(79,142,247,0.12); }
+    .orb-b { width: 500px; height: 500px; bottom: -100px; right: -150px;
+      background: rgba(139,92,246,0.12); }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid var(--border);
+      color: var(--muted); font-size: .8rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+      padding: 7px 18px; border-radius: 50px; margin-bottom: 28px;
+      animation: fadeUp .7s ease both;
+    }
+    .hero-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+    h1 {
+      font-family: 'Bebas Neue', cursive;
+      font-size: clamp(4rem, 10vw, 8.5rem);
+      letter-spacing: 4px; line-height: .95;
+      animation: fadeUp .8s .08s ease both;
+    }
+    h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--accent) 0%, #a78bfa 50%, var(--candy-pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-size: 200%;
+      animation: gradMove 5s ease infinite;
+    }
+    @keyframes gradMove {
+      0%,100% { background-position: 0%; }
+      50%      { background-position: 100%; }
+    }
+
+    .hero-sub {
+      max-width: 540px; color: var(--muted);
+      font-size: 1.05rem; font-weight: 500; line-height: 1.7;
+      margin: 24px auto 44px;
+      animation: fadeUp .8s .2s ease both;
+    }
+
+    .hero-games-preview {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+      animation: fadeUp .8s .3s ease both;
+    }
+    .mini-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--card); border: 1px solid var(--border);
+      padding: 8px 16px; border-radius: 50px;
+      font-weight: 600; font-size: .88rem; color: var(--text);
+      transition: border-color .2s;
+    }
+    .mini-badge:hover { border-color: rgba(255,255,255,.2); }
+
+    .hero-numbers {
+      display: flex; gap: 60px; justify-content: center;
+      margin-top: 72px; padding-top: 48px;
+      border-top: 1px solid var(--border);
+      animation: fadeUp .8s .45s ease both; flex-wrap: wrap; gap: 40px;
+    }
+    .num-block { text-align: center; }
+    .num-val {
+      font-family: 'Bebas Neue', cursive; font-size: 2.8rem; letter-spacing: 2px;
+      color: var(--text);
+    }
+    .num-val span { color: var(--accent); }
+    .num-label { color: var(--muted); font-size: .8rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── GAMES SECTION ── */
+    #games {
+      padding: 120px 7%; position: relative; z-index: 1;
+      background: var(--bg2);
+    }
+    .sec-tag  { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 10px; }
+    .sec-title { font-family: 'Bebas Neue', cursive; font-size: clamp(2.2rem, 4vw, 3.4rem); letter-spacing: 2px; margin-bottom: 56px; }
+
+    /* GAME CARD */
+    .game-card {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0; border-radius: 24px; overflow: hidden;
+      border: 1px solid var(--border);
+      margin-bottom: 32px;
+      transition: transform .35s, box-shadow .35s;
+    }
+    .game-card:hover { transform: translateY(-6px); }
+    .game-card.reverse { direction: rtl; }
+    .game-card.reverse > * { direction: ltr; }
+
+    /* Chess card */
+    .game-card.chess { box-shadow: 0 0 80px rgba(212,168,67,0.08); }
+    .game-card.chess:hover { box-shadow: 0 20px 80px rgba(212,168,67,0.2); }
+    .game-card.candy { box-shadow: 0 0 80px rgba(255,79,145,0.08); }
+    .game-card.candy:hover { box-shadow: 0 20px 80px rgba(255,79,145,0.18); }
+    .game-card.puzzle { box-shadow: 0 0 80px rgba(155,92,246,0.08); }
+    .game-card.puzzle:hover { box-shadow: 0 20px 80px rgba(155,92,246,0.18); }
+
+    .game-visual {
+      min-height: 380px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden; font-size: 6rem;
+    }
+    .chess .game-visual  { background: linear-gradient(135deg, #0f1a0f, #1a2e1a, #0a1a0a); }
+    .candy .game-visual  { background: linear-gradient(135deg, #1a0a1a, #2a0a2a, #1a0815); }
+    .puzzle .game-visual { background: linear-gradient(135deg, #0a0a1e, #13102d, #0a1228); }
+
+    .visual-glow {
+      position: absolute; width: 200px; height: 200px; border-radius: 50%;
+      filter: blur(60px); pointer-events: none;
+    }
+    .chess  .visual-glow { background: rgba(212,168,67,0.3); }
+    .candy  .visual-glow { background: rgba(255,79,145,0.3); }
+    .puzzle .visual-glow { background: rgba(155,92,246,0.3); }
+
+    /* Chess board mini */
+    .chess-board {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 3px; padding: 4px; background: rgba(0,0,0,.3); border-radius: 8px;
+    }
+    .chess-sq {
+      width: 36px; height: 36px; border-radius: 4px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+    }
+    .chess-sq.light { background: rgba(212,168,67,0.15); }
+    .chess-sq.dark  { background: rgba(212,168,67,0.05); }
+
+    /* Candy grid mini */
+    .candy-grid {
+      display: grid; grid-template-columns: repeat(5,1fr); gap: 6px;
+    }
+    .candy-dot {
+      width: 32px; height: 32px; border-radius: 50%;
+      animation: bounceDot 2s ease infinite;
+    }
+    @keyframes bounceDot { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+
+    /* Puzzle tiles mini */
+    .puzzle-tiles {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 8px;
+    }
+    .puzzle-tile {
+      width: 44px; height: 44px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+    }
+
+    .game-info {
+      padding: 52px 52px;
+      background: var(--bg3);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .game-tag {
+      display: inline-block; font-size: .72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 2px;
+      padding: 4px 12px; border-radius: 4px; margin-bottom: 20px;
+      width: fit-content;
+    }
+    .chess  .game-tag { background: rgba(212,168,67,0.15); color: var(--chess-gold); }
+    .candy  .game-tag { background: rgba(255,79,145,0.15); color: var(--candy-pink); }
+    .puzzle .game-tag { background: rgba(155,92,246,0.15); color: var(--puzzle-pur); }
+
+    .game-title {
+      font-family: 'Bebas Neue', cursive;
+      font-size: clamp(2rem, 3.5vw, 3rem); letter-spacing: 2px;
+      line-height: 1; margin-bottom: 16px;
+    }
+    .game-desc { color: var(--muted); font-size: .96rem; line-height: 1.75; font-weight: 500; margin-bottom: 28px; }
+
+    .game-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+    .chip {
+      font-size: .78rem; font-weight: 600; padding: 5px 12px; border-radius: 50px;
+      background: var(--card); border: 1px solid var(--border); color: var(--muted);
+    }
+
+    .game-meta { display: flex; gap: 28px; margin-bottom: 36px; }
+    .meta-item { }
+    .meta-val { font-family: 'Bebas Neue', cursive; font-size: 1.6rem; letter-spacing: 1px; }
+    .chess  .meta-val { color: var(--chess-gold); }
+    .candy  .meta-val { color: var(--candy-pink); }
+    .puzzle .meta-val { color: var(--puzzle-pur); }
+    .meta-key { font-size: .72rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+    .play-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-weight: 700; font-size: .92rem; letter-spacing: .5px;
+      padding: 13px 28px; border-radius: 10px; text-decoration: none;
+      width: fit-content; transition: opacity .2s, transform .2s;
+    }
+    .play-btn:hover { opacity: .85; transform: translateY(-2px); }
+    .chess  .play-btn { background: var(--chess-gold); color: #000; }
+    .candy  .play-btn { background: var(--candy-pink); color: #fff; }
+    .puzzle .play-btn { background: var(--puzzle-pur); color: #fff; }
+
+    /* ── ABOUT ── */
+    #about {
+      padding: 120px 7%; position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .about-visual {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .about-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 20px; padding: 28px 24px; text-align: center;
+      transition: transform .3s; cursor: default;
+    }
+    .about-card:hover { transform: translateY(-4px); }
+    .about-card-icon { font-size: 2.2rem; margin-bottom: 12px; display: block; }
+    .about-card h4 { font-family: 'Bebas Neue', cursive; font-size: 1.4rem; letter-spacing: 1px; margin-bottom: 6px; }
+    .about-card p  { color: var(--muted); font-size: .82rem; font-weight: 500; line-height: 1.5; }
+    .about-card.span2 { grid-column: span 2; }
+
+    .about-text .sec-title { margin-bottom: 20px; }
+    .about-text p { color: var(--muted); font-size: 1rem; line-height: 1.8; font-weight: 500; margin-bottom: 16px; }
+
+    /* ── DOWNLOAD ALL ── */
+    #download {
+      padding: 120px 7%; text-align: center; position: relative; z-index: 1;
+      background: var(--bg2);
+    }
+    #download .sec-title { margin-bottom: 12px; }
+    #download p { color: var(--muted); font-size: 1.05rem; max-width: 500px; margin: 0 auto 60px; font-weight: 500; }
+    .all-games-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px; max-width: 900px; margin: 0 auto;
+    }
+    .dl-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 20px; padding: 40px 28px;
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+      transition: transform .3s, border-color .3s;
+    }
+    .dl-card:hover { transform: translateY(-6px); }
+    .chess-dl:hover  { border-color: rgba(212,168,67,.4); }
+    .candy-dl:hover  { border-color: rgba(255,79,145,.4); }
+    .puzzle-dl:hover { border-color: rgba(155,92,246,.4); }
+    .dl-icon { font-size: 3.5rem; }
+    .dl-name { font-family: 'Bebas Neue', cursive; font-size: 1.6rem; letter-spacing: 1.5px; }
+    .dl-desc { color: var(--muted); font-size: .85rem; font-weight: 500; text-align: center; line-height: 1.5; }
+    .dl-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 24px; border-radius: 8px; text-decoration: none;
+      font-weight: 700; font-size: .85rem; transition: opacity .2s;
+    }
+    .dl-btn:hover { opacity: .85; }
+    .chess-dl  .dl-btn { background: var(--chess-gold);  color: #000; }
+    .candy-dl  .dl-btn { background: var(--candy-pink);  color: #fff; }
+    .puzzle-dl .dl-btn { background: var(--puzzle-pur);  color: #fff; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 48px 7% 32px; position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
+    }
+    .footer-left { display: flex; flex-direction: column; gap: 8px; }
+    .footer-logo { font-family: 'Bebas Neue', cursive; font-size: 1.5rem; letter-spacing: 3px; color: var(--text); }
+    .footer-by   { color: var(--muted); font-size: .82rem; font-weight: 600; }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: .88rem; font-weight: 600; transition: color .2s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy { color: var(--muted); font-size: .8rem; font-weight: 500; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .game-card, .game-card.reverse { grid-template-columns: 1fr; direction: ltr; }
+      .game-visual { min-height: 220px; }
+      .game-info { padding: 36px 28px; }
+      #about { grid-template-columns: 1fr; }
+      .all-games-grid { grid-template-columns: 1fr; max-width: 380px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="logo-icon">🎮</div>
+    DA GAMES
+  </a>
+  <div class="nav-links">
+    <a href="#games">Games</a>
+    <a href="#about">About</a>
+    <a href="#download">Download</a>
+  </div>
+  <a href="#download" class="nav-cta">All Games ↗</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
+
+  <div class="hero-eyebrow"><span></span> Independent Game Studio</div>
+
+  <h1>WE MAKE<br><em>GREAT GAMES</em></h1>
+
+  <p class="hero-sub">Three unique games. One passionate studio. Built for players who love a challenge — on Android, completely free.</p>
+
+  <div class="hero-games-preview">
+    <div class="mini-badge">♟️ Master Chess</div>
+    <div class="mini-badge">🍬 Sweet Crunch</div>
+    <div class="mini-badge">🧩 Puzzle Arena</div>
+  </div>
+
+  <div class="hero-numbers">
+    <div class="num-block">
+      <div class="num-val">80<span>+</span></div>
+      <div class="num-label">Total Downloads</div>
+    </div>
+    <div class="num-block">
+      <div class="num-val">3<span></span></div>
+      <div class="num-label">Published Games</div>
+    </div>
+    <div class="num-block">
+      <div class="num-val">5.0<span>★</span></div>
+      <div class="num-label">Avg Rating</div>
+    </div>
+    <div class="num-block">
+      <div class="num-val">3<span>+</span></div>
+      <div class="num-label">Rated For</div>
+    </div>
+  </div>
+</section>
+
+<!-- GAMES -->
+<section id="games">
+  <div class="reveal">
+    <div class="sec-tag">Our Games</div>
+    <div class="sec-title">Three worlds to explore</div>
+  </div>
+
+  <!-- MASTER CHESS -->
+  <div class="game-card chess reveal">
+    <div class="game-visual">
+      <div class="visual-glow"></div>
+      <div style="z-index:1; text-align:center;">
+        <div style="font-size:3.5rem; margin-bottom:20px;">♟️</div>
+        <div class="chess-board">
+          <!-- 4x4 mini chess board -->
+          <div class="chess-sq light">♜</div><div class="chess-sq dark">♝</div><div class="chess-sq light">♛</div><div class="chess-sq dark">♚</div>
+          <div class="chess-sq dark"></div><div class="chess-sq light">♟</div><div class="chess-sq dark">♟</div><div class="chess-sq light"></div>
+          <div class="chess-sq light"></div><div class="chess-sq dark"></div><div class="chess-sq light">♙</div><div class="chess-sq dark"></div>
+          <div class="chess-sq dark">♖</div><div class="chess-sq light">♗</div><div class="chess-sq dark">♕</div><div class="chess-sq light">♔</div>
+        </div>
+      </div>
+    </div>
+    <div class="game-info">
+      <div class="game-tag">Strategy • Board</div>
+      <div class="game-title">Master Chess</div>
+      <p class="game-desc">The ultimate chess experience on mobile. Face powerful AI opponents across multiple difficulty levels, master classic openings, and sharpen your game with built-in lessons. Think. Plan. Conquer.</p>
+      <div class="game-chips">
+        <span class="chip">AI Opponent</span>
+        <span class="chip">Multiple Levels</span>
+        <span class="chip">Achievements</span>
+        <span class="chip">Free Play</span>
+        <span class="chip">Vs Human</span>
+      </div>
+      <div class="game-meta">
+        <div class="meta-item">
+          <div class="meta-val">50+</div>
+          <div class="meta-key">Downloads</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-val">3+</div>
+          <div class="meta-key">Age Rating</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-val">FREE</div>
+          <div class="meta-key">Price</div>
+        </div>
+      </div>
+      <a href="https://play.google.com/store/apps/details?id=com.masterchess.kingch" class="play-btn" target="_blank">
+        ▶ Download on Play Store
+      </a>
+    </div>
+  </div>
+
+  <!-- SWEET CRUNCH -->
+  <div class="game-card candy reverse reveal">
+    <div class="game-visual">
+      <div class="visual-glow"></div>
+      <div style="z-index:1; text-align:center;">
+        <div style="font-size:3rem; margin-bottom:20px;">🍬</div>
+        <div class="candy-grid">
+          <div class="candy-dot" style="background:#ff4f91;animation-delay:0s"></div>
+          <div class="candy-dot" style="background:#3de8ff;animation-delay:.2s"></div>
+          <div class="candy-dot" style="background:#ffe94d;animation-delay:.4s"></div>
+          <div class="candy-dot" style="background:#4ade80;animation-delay:.1s"></div>
+          <div class="candy-dot" style="background:#f97316;animation-delay:.3s"></div>
+          <div class="candy-dot" style="background:#a78bfa;animation-delay:.5s"></div>
+          <div class="candy-dot" style="background:#3de8ff;animation-delay:.2s"></div>
+          <div class="candy-dot" style="background:#ff4f91;animation-delay:.0s"></div>
+          <div class="candy-dot" style="background:#ffe94d;animation-delay:.4s"></div>
+          <div class="candy-dot" style="background:#4ade80;animation-delay:.1s"></div>
+          <div class="candy-dot" style="background:#f97316;animation-delay:.3s"></div>
+          <div class="candy-dot" style="background:#a78bfa;animation-delay:.5s"></div>
+          <div class="candy-dot" style="background:#ff4f91;animation-delay:.2s"></div>
+          <div class="candy-dot" style="background:#3de8ff;animation-delay:.0s"></div>
+          <div class="candy-dot" style="background:#ffe94d;animation-delay:.3s"></div>
+        </div>
+      </div>
+    </div>
+    <div class="game-info">
+      <div class="game-tag">Casual • Match-3</div>
+      <div class="game-title">Sweet Crunch</div>
+      <p class="game-desc">Match, crush, and win! Sweet Crunch is an addictive match-3 puzzle game bursting with colour and flavour. Hundreds of levels, special boosters, and sweet rewards keep you coming back for more.</p>
+      <div class="game-chips">
+        <span class="chip">Match-3</span>
+        <span class="chip">100+ Levels</span>
+        <span class="chip">Boosters</span>
+        <span class="chip">Level Map</span>
+        <span class="chip">Achievements</span>
+      </div>
+      <div class="game-meta">
+        <div class="meta-item">
+          <div class="meta-val">10+</div>
+          <div class="meta-key">Downloads</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-val">5.0★</div>
+          <div class="meta-key">Rating</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-val">FREE</div>
+          <div class="meta-key">Price</div>
+        </div>
+      </div>
+      <a href="https://play.google.com/store/apps/details?id=com.sweetcrunch.candysw" class="play-btn" target="_blank">
+        ▶ Download on Play Store
+      </a>
+    </div>
+  </div>
+
+  <!-- PUZZLE ARENA -->
+  <div class="game-card puzzle reveal">
+    <div class="game-visual">
+      <div class="visual-glow"></div>
+      <div style="z-index:1; text-align:center;">
+        <div style="font-size:3rem; margin-bottom:20px;">🧩</div>
+        <div class="puzzle-tiles">
+          <div class="puzzle-tile" style="background:rgba(155,92,246,.3);border:2px solid rgba(155,92,246,.6)">🔮</div>
+          <div class="puzzle-tile" style="background:rgba(34,211,238,.3);border:2px solid rgba(34,211,238,.6)">💎</div>
+          <div class="puzzle-tile" style="background:rgba(255,79,145,.3);border:2px solid rgba(255,79,145,.6)">⭐</div>
+          <div class="puzzle-tile" style="background:rgba(34,211,238,.3);border:2px solid rgba(34,211,238,.6)">🔷</div>
+          <div class="puzzle-tile" style="background:rgba(255,233,77,.3);border:2px solid rgba(255,233,77,.6)">⚡</div>
+          <div class="puzzle-tile" style="background:rgba(155,92,246,.3);border:2px solid rgba(155,92,246,.6)">🎯</div>
+          <div class="puzzle-tile" style="background:rgba(255,79,145,.3);border:2px solid rgba(255,79,145,.6)">🔶</div>
+          <div class="puzzle-tile" style="background:rgba(255,233,77,.3);border:2px solid rgba(255,233,77,.6)">💫</div>
+          <div class="puzzle-tile" style="background:rgba(34,211,238,.3);border:2px solid rgba(34,211,238,.6)">🔮</div>
+        </div>
+      </div>
+    </div>
+    <div class="game-info">
+      <div class="game-tag">Puzzle • PvP</div>
+      <div class="game-title">Puzzle Arena</div>
+      <p class="game-desc">Battle of brilliant minds. Solve mind-bending puzzles, challenge real players in live PvP battles, and climb the global leaderboard. 500+ levels, daily challenges, and ranked seasons await.</p>
+      <div class="game-chips">
+        <span class="chip">PvP Battles</span>
+        <span class="chip">500+ Levels</span>
+        <span class="chip">Daily Challenges</span>
+        <span class="chip">Leaderboard</span>
+        <span class="chip">Ranked Seasons</span>
+      </div>
+      <div class="game-meta">
+        <div class="meta-item">
+          <div class="meta-val">4+</div>
+          <div class="meta-key">Players</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-val">3+</div>
+          <div class="meta-key">Age Rating</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-val">FREE</div>
+          <div class="meta-key">Price</div>
+        </div>
+      </div>
+      <a href="https://play.google.com/store/apps/details?id=com.puzzlearena.puzzle" class="play-btn" target="_blank">
+        ▶ Download on Play Store
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual reveal">
+    <div class="about-card">
+      <span class="about-card-icon">🎮</span>
+      <h4>3 Games</h4>
+      <p>Strategy, casual, and puzzle — something for everyone</p>
+    </div>
+    <div class="about-card">
+      <span class="about-card-icon">🌍</span>
+      <h4>Global</h4>
+      <p>Players from around the world on every game</p>
+    </div>
+    <div class="about-card">
+      <span class="about-card-icon">🔄</span>
+      <h4>Regular Updates</h4>
+      <p>New content and improvements added consistently</p>
+    </div>
+    <div class="about-card">
+      <span class="about-card-icon">⚡</span>
+      <h4>Always Free</h4>
+      <p>All our games are free to download and play</p>
+    </div>
+  </div>
+  <div class="about-text reveal">
+    <div class="sec-tag">About the Studio</div>
+    <div class="sec-title">Built with passion, one game at a time</div>
+    <p>DA Games is an independent mobile game studio publishing under the developer name <strong>dear_abhay7676</strong> on Google Play.</p>
+    <p>We focus on crafting enjoyable, polished experiences across different genres — from the classic depth of chess to the colourful fun of match-3 and the brain-bending thrill of puzzle battles.</p>
+    <p>All our games are free, family-friendly, and built to be played anywhere.</p>
+  </div>
+</section>
+
+<!-- DOWNLOAD ALL -->
+<section id="download">
+  <div class="reveal">
+    <div class="sec-tag">Download Free</div>
+    <div class="sec-title">Pick your game</div>
+    <p>All games are free on Google Play. No subscription, no hidden fees.</p>
+  </div>
+  <div class="all-games-grid reveal">
+    <div class="dl-card chess-dl">
+      <div class="dl-icon">♟️</div>
+      <div class="dl-name">Master Chess</div>
+      <div class="dl-desc">Strategy board game for all skill levels</div>
+      <a href="https://play.google.com/store/apps/details?id=com.masterchess.kingch" class="dl-btn" target="_blank">▶ Play Store</a>
+    </div>
+    <div class="dl-card candy-dl">
+      <div class="dl-icon">🍬</div>
+      <div class="dl-name">Sweet Crunch</div>
+      <div class="dl-desc">Addictive match-3 puzzle adventure</div>
+      <a href="https://play.google.com/store/apps/details?id=com.sweetcrunch.candysw" class="dl-btn" target="_blank">▶ Play Store</a>
+    </div>
+    <div class="dl-card puzzle-dl">
+      <div class="dl-icon">🧩</div>
+      <div class="dl-name">Puzzle Arena</div>
+      <div class="dl-desc">PvP puzzle battles and daily challenges</div>
+      <a href="https://play.google.com/store/apps/details?id=com.puzzlearena.puzzle" class="dl-btn" target="_blank">▶ Play Store</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <div class="footer-logo">🎮 DA GAMES</div>
+    <div class="footer-by">by dear_abhay7676 • Google Play Developer</div>
+  </div>
+  <div class="footer-links">
+    <a href="/privacy-policy.html">Privacy Policy</a>
+    <a href="/terms.html">Terms of Use</a>
+    <a href="mailto:support@dagames.in">Contact</a>
+    <a href="/app-ads.txt">app-ads.txt</a>
+  </div>
+  <div class="footer-copy">© 2026 DA Games. All rights reserved.</div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 100);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
